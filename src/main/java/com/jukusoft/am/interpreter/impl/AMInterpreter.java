@@ -84,6 +84,7 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("GT", 0);
         this.commandParams.put("LE", 0);
         this.commandParams.put("GE", 0);
+        this.commandParams.put("JMP", 1);
     }
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException {
@@ -416,6 +417,26 @@ public class AMInterpreter implements Interpreter {
 
                 break;
 
+            case "JMP":
+                //check, if bz exists
+                if (!this.commandHistory.containsKey(intParams[0])) {
+                    this.jmp(intParams[0]);
+
+                    //notify listeners
+                    this.notifyListeners();
+
+                    //incremnt command counter
+                    this.bz++;
+
+                    if (this.bz > this.lastBZ) {
+                        this.lastBZ = this.bz;
+                    }
+
+                    return;
+                } else {
+                    throw new InterpreterRuntimeException(cmd, "Cannot jump to " + intParams[0] + ", this command line wasnt inserted yet.");
+                }
+
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
         }
@@ -494,6 +515,16 @@ public class AMInterpreter implements Interpreter {
     }
 
     @Override
+    public void printHistory() {
+        for (Map.Entry<Integer,String> entry : this.commandHistory.entrySet()) {
+            int bz = entry.getKey();
+            String cmdStr = entry.getValue();
+
+            System.out.println("#" + bz + " : " + cmdStr);
+        }
+    }
+
+    @Override
     public void resetInput() {
         //clear input queue
         this.inputQueue.clear();
@@ -534,7 +565,17 @@ public class AMInterpreter implements Interpreter {
     }
 
     protected void jmp (int newBZ) {
+        this.bz = newBZ;
 
+        while (this.commandHistory.containsKey(newBZ)) {
+            this.bz++;
+
+            //get command
+            String cmdStr = this.commandHistory.get(this.bz - 1);
+
+            //execute command
+            this.executeLine(cmdStr);
+        }
     }
 
     public static String trimEnd (String value) {

@@ -17,7 +17,7 @@ import java.util.List;
 public class Main {
 
     public static void main (String[] args) {
-        System.out.println("======== AM0 Interpreter ========\n\nYou can type an filename or AM0 commands directly.\nTo set Input, execute: INPUT: <array with numbers>\nfor example: \"INPUT: 1 2 3\".\n\nTo set ref pointer, use \"REF: <number>\".\nInsert \"reset\" to reset all data or \"quit\" to close application.\n");
+        System.out.println("======== AM0 Interpreter ========\n\nYou can type an filename or AM0 commands directly.\nTo set Input, execute: INPUT: <array with numbers>\nfor example: \"INPUT: 1 2 3\".\n\nTo set ref pointer, use \"REF: <number>\".\nInsert \"reset\" to reset all data, \"history\" to list all inserted commands before or \"quit\" to close application.\n");
 
         //create new instance of AM0 interpreter
         Interpreter amInterpreter = new AMInterpreter();
@@ -114,6 +114,13 @@ public class Main {
                 //print data
                 printLineListener.printHeader();
                 amInterpreter.print();
+
+                continue;
+            }
+
+            if (line.toLowerCase().equals("history")) {
+                //print command history
+                amInterpreter.printHistory();
 
                 continue;
             }

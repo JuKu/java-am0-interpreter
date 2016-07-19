@@ -29,6 +29,8 @@ public interface Interpreter {
 
     public void print ();
 
+    public void printHistory ();
+
     public void resetInput ();
 
 }
