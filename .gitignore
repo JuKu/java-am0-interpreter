@@ -56,6 +56,11 @@ fabric.properties
 # *.ipr
 
 
+.idea
+*.idea
+.iml
+*.iml
+
 ### Java ###
 *.class
 
