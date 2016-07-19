@@ -1,6 +1,8 @@
 # AM0 Interpreter for Java
 
-An interpreter for AM0, written in Java 8.
+An (also Just-In-Time) interpreter for AM0, written in Java 8.
+You can insert your commands in interactive console mode or write an file with your AM0 commands and execute them.
+Its also possible to use only the core functionality to integrate this interpreter in your own application.
 
 Version: 0.0.1 (Pre-Alpha)
 
