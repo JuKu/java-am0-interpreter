@@ -103,9 +103,13 @@ public class AMInterpreter implements Interpreter {
                 paramStr += array[i + 1] + " ";
             }
 
+            cmd = trimEnd(trimStart(cmd));
+
             try {
-                //execute command
-                this.executeCommand(cmd, params);
+                if (!cmd.isEmpty() && !cmd.equals(" ")) {
+                    //execute command
+                    this.executeCommand(cmd, params);
+                }
             } catch (UnknownCommandException e) {
                 if (lineNumber != 0) {
                     System.err.println("Unknown command in line " + lineNumber + ": " + cmd + " with params: " + trimEnd(trimStart(paramStr)));
