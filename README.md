@@ -21,3 +21,5 @@ Version: 0.0.1 (Pre-Alpha)
 experimental:
  - LOAD <Integer>
  - STORE <Integer>
+ - JMP <BZ> (jump to command number BZ)
+ - JMC <BZ> (jump on condition, if 0 is on top of stack)
