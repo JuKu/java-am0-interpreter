@@ -465,6 +465,26 @@ public class AMInterpreter implements Interpreter {
 
                 break;
 
+            case "WRITE":
+                //get index of main memory
+                i = intParams[0];
+
+                if (this.memory.size() >= i) {
+                    try {
+                        //get value of index i in memory
+                        k = this.memory.get(i);
+
+                        //write value to output
+                        this.outputList.add(k);
+                    } catch (AMMainMemoryException e) {
+                        throw new InterpreterRuntimeException(cmd, "Cannot WRITE runtime memory index " + i + " to output, because size of LK memory is only " + this.memory.size() + ", so size < index.");
+                    }
+                } else {
+                    throw new InterpreterRuntimeException(cmd, "Cannot WRITE runtime memory index " + i + " to output, because size of LK memory is only " + this.memory.size() + ", so size < index.");
+                }
+
+                break;
+
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
         }
