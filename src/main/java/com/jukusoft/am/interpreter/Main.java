@@ -110,6 +110,12 @@ public class Main {
             if (line.toLowerCase().equals("reset")) {
                 //reset interpreter
                 amInterpreter.reset();
+
+                //print data
+                printLineListener.printHeader();
+                amInterpreter.print();
+
+                continue;
             }
 
             //create new instance of file

@@ -464,6 +464,11 @@ public class AMInterpreter implements Interpreter {
     }
 
     @Override
+    public void print() {
+        this.notifyListeners();
+    }
+
+    @Override
     public void resetInput() {
         //clear input queue
         this.inputQueue.clear();

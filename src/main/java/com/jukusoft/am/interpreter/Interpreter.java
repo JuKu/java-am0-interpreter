@@ -25,6 +25,8 @@ public interface Interpreter {
 
     public void setRef (int ref);
 
+    public void print ();
+
     public void resetInput ();
 
 }
