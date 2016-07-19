@@ -485,6 +485,26 @@ public class AMInterpreter implements Interpreter {
 
                 break;
 
+            case "READ":
+                //get index of main memory
+                i = intParams[0];
+
+                if (this.inputQueue.isEmpty()) {
+                    throw new InterpreterRuntimeException(cmd, "Cannot READ from input, because input is empty.");
+                }
+
+                //get value from input queue
+                k = this.inputQueue.poll();
+
+                //put value into main memory
+                try {
+                    this.memory.push(i, k);
+                } catch (AMMainMemoryException e) {
+                    throw new InterpreterRuntimeException(cmd, "Cannot set input value " + k + " to main memory LK, because index doesnt exists.\n" + e.getLocalizedMessage());
+                }
+
+                break;
+
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
         }
