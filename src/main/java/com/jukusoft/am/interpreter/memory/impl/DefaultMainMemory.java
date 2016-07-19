@@ -16,6 +16,11 @@ public class DefaultMainMemory implements MainMemory {
 
     @Override
     public void push(int index, int i) throws AMMainMemoryException {
+        if (this.memory.size() >= index) {
+            //specific element first
+            this.memory.remove(index);
+        }
+
         try {
             this.memory.add(index - 1, i);
         } catch (IndexOutOfBoundsException e) {
