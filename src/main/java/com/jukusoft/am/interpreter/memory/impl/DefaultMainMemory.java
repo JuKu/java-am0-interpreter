@@ -55,4 +55,9 @@ public class DefaultMainMemory implements MainMemory {
         return this.memory.size();
     }
 
+    @Override
+    public void reset() {
+        this.memory.clear();
+    }
+
 }

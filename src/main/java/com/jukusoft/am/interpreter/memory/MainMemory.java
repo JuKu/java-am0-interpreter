@@ -21,4 +21,6 @@ public interface MainMemory {
 
     public int size ();
 
+    public void reset ();
+
 }

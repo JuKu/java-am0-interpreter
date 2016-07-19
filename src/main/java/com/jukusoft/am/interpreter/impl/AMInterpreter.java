@@ -46,7 +46,9 @@ public class AMInterpreter implements Interpreter {
 
     protected int currentLineNumber = 1;
 
-    protected int ref = 0;
+    protected int bz = 1;
+
+    protected int ref = 1;
 
     protected String lastCommand = "";
 
@@ -135,6 +137,9 @@ public class AMInterpreter implements Interpreter {
 
         //increment line number
         this.currentLineNumber++;
+
+        //incremnt command counter
+        this.bz++;
     }
 
     @Override
@@ -410,6 +415,19 @@ public class AMInterpreter implements Interpreter {
         //clear stack
         this.stack.clear();
 
+        //clear runtime keller
+        this.memory.reset();
+
+        this.currentLineNumber = 1;
+        this.bz = 1;
+        this.ref = 1;
+
+        //reset last command
+        this.lastCommand = "";
+
+        this.inputQueue.clear();
+        this.outputList.clear();
+
         //clear input queue
         this.resetInput();
     }
@@ -427,6 +445,11 @@ public class AMInterpreter implements Interpreter {
     @Override
     public int getCurrentLineNumber () {
         return this.currentLineNumber;
+    }
+
+    @Override
+    public int getBZ() {
+        return this.bz;
     }
 
     @Override
@@ -466,7 +489,7 @@ public class AMInterpreter implements Interpreter {
         }
 
         for (CommandExecutedListener listener : this.listenerList) {
-            listener.afterExecute(this.currentLineNumber, this.lastCommand, dataKeller, this.memory, this.ref, inputList, Collections.unmodifiableList(this.outputList));
+            listener.afterExecute(this.bz, this.lastCommand, dataKeller, this.memory, this.ref, inputList, Collections.unmodifiableList(this.outputList));
         }
     }
 

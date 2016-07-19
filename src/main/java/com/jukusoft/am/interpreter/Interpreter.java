@@ -19,6 +19,8 @@ public interface Interpreter {
 
     public int getCurrentLineNumber ();
 
+    public int getBZ ();
+
     public void addInputNumber (int value);
 
     public void setRef (int ref);
