@@ -419,7 +419,7 @@ public class AMInterpreter implements Interpreter {
 
             case "JMP":
                 //check, if bz exists
-                if (!this.commandHistory.containsKey(intParams[0])) {
+                if (this.commandHistory.containsKey(intParams[0])) {
                     this.jmp(intParams[0]);
 
                     //notify listeners
