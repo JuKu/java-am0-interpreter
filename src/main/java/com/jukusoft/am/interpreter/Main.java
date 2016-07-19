@@ -153,8 +153,14 @@ public class Main {
                 //print header
                 printLineListener.printHeader();
 
-                //execute AM0 command
-                amInterpreter.executeLine(line);
+                try {
+                    //execute AM0 command
+                    amInterpreter.executeLine(line);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error! Please insert an number as parameter!");
+                } catch (Exception e) {
+                    System.out.println("An runtime error oncurred: " + e.getLocalizedMessage());
+                }
             }
         }
     }

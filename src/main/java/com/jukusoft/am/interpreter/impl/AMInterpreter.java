@@ -86,7 +86,7 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("GE", 0);
     }
 
-    public void executeLine (String line, int lineNumber) {
+    public void executeLine (String line, int lineNumber) throws NumberFormatException {
         //split commands by semicoleon
         String[] commands = line.split(";");
 
@@ -153,7 +153,7 @@ public class AMInterpreter implements Interpreter {
     }
 
     @Override
-    public void executeLine (String line) {
+    public void executeLine (String line) throws NumberFormatException {
         this.executeLine(line, this.currentLineNumber);
     }
 
