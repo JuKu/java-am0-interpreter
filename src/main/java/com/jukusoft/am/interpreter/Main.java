@@ -153,7 +153,7 @@ public class Main {
 
                         continue;
                     } catch (ScriptEndReachedException e) {
-                        System.out.println("executed AM0 commands successful, end of script or return reached.");
+                        System.out.println(e.getMessage());
                         break;
                     }
                 } else {
@@ -170,7 +170,7 @@ public class Main {
                 } catch (NumberFormatException e) {
                     System.out.println("Error! Please insert an number as parameter!");
                 } catch (ScriptEndReachedException e) {
-                    System.out.println("executed AM0 commands successful, end of script or return reached.");
+                    System.out.println(e.getMessage());
                 } catch (Exception e) {
                     System.out.println("An runtime error oncurred: " + e.getLocalizedMessage());
                 }

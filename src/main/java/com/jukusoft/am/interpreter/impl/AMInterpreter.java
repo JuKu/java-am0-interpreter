@@ -63,6 +63,9 @@ public class AMInterpreter implements Interpreter {
     */
     protected Map<Integer,String> commandHistory = new HashMap<>();
 
+    public static final int MAX_JUMPS = 50;
+    protected int jmpCounter = 0;
+
     public AMInterpreter () {
         //put number of required params per command to map
         this.commandParams.put("LIT", 1);
@@ -434,6 +437,34 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot jump to " + intParams[0] + ", this command line wasnt inserted yet.");
                 }
 
+            case "JMC":
+                //check, if bz exists
+                if (this.commandHistory.containsKey(intParams[0]) || intParams[0] == 0) {
+                    if (stack.size() < 1) {
+                        throw new InterpreterRuntimeException(cmd, "Cannot execute JMP, because 1 element on stack required.");
+                    }
+
+                    if (stack.poll() == TRUE_INT_VALUE) {
+                        this.jmp(intParams[0]);
+
+                        //notify listeners
+                        this.notifyListeners();
+
+                        //incremnt command counter
+                        this.bz++;
+
+                        if (this.bz > this.lastBZ) {
+                            this.lastBZ = this.bz;
+                        }
+
+                        return;
+                    }
+                } else {
+                    throw new InterpreterRuntimeException(cmd, "Cannot jump to " + intParams[0] + ", this command line wasnt inserted yet.");
+                }
+
+                break;
+
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
         }
@@ -561,14 +592,22 @@ public class AMInterpreter implements Interpreter {
         return intArray;
     }
 
-    protected void jmp (int newBZ) throws ScriptEndReachedException {
+    protected void jmp (int newBZ) throws ScriptEndReachedException, InterpreterRuntimeException {
         this.bz = newBZ;
+
+        if (jmpCounter >= MAX_JUMPS) {
+            System.out.println("ERROR! Max. number of allowed jumps (50) was reached. Maybe you have an endless loop?");
+
+            throw new ScriptEndReachedException("ERROR! Max. number of allowed jumps reached. Maybe you have an endless loop?");
+        }
+
+        this.jmpCounter++;
 
         if (newBZ == 0) {
             this.notifyListeners();
 
             //quit application
-            throw new ScriptEndReachedException("Script end was reached.");
+            throw new ScriptEndReachedException("SUCCESS! Script end or return statement was reached.");
         }
 
         while (this.commandHistory.containsKey(newBZ)) {
@@ -580,6 +619,8 @@ public class AMInterpreter implements Interpreter {
             //execute command
             this.executeLine(cmdStr);
         }
+
+        this.jmpCounter--;
     }
 
     public static String trimEnd (String value) {
