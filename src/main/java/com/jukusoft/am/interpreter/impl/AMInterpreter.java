@@ -1,10 +1,7 @@
 package com.jukusoft.am.interpreter.impl;
 
 import com.jukusoft.am.interpreter.Interpreter;
-import com.jukusoft.am.interpreter.exception.AMMainMemoryException;
-import com.jukusoft.am.interpreter.exception.IllegalCommandArgumentException;
-import com.jukusoft.am.interpreter.exception.InterpreterRuntimeException;
-import com.jukusoft.am.interpreter.exception.UnknownCommandException;
+import com.jukusoft.am.interpreter.exception.*;
 import com.jukusoft.am.interpreter.listener.CommandExecutedListener;
 import com.jukusoft.am.interpreter.memory.MainMemory;
 import com.jukusoft.am.interpreter.memory.impl.DefaultMainMemory;
@@ -87,7 +84,7 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("JMP", 1);
     }
 
-    public void executeLine (String line, int lineNumber) throws NumberFormatException {
+    public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
         //split commands by semicoleon
         String[] commands = line.split(";");
 
@@ -154,11 +151,11 @@ public class AMInterpreter implements Interpreter {
     }
 
     @Override
-    public void executeLine (String line) throws NumberFormatException {
+    public void executeLine (String line) throws NumberFormatException, ScriptEndReachedException {
         this.executeLine(line, this.currentLineNumber);
     }
 
-    public void executeCommand (String cmd, String... params) throws UnknownCommandException, NumberFormatException, IllegalCommandArgumentException, InterpreterRuntimeException {
+    public void executeCommand (String cmd, String... params) throws UnknownCommandException, NumberFormatException, IllegalCommandArgumentException, InterpreterRuntimeException, ScriptEndReachedException {
         this.lastCommand = cmd + " " + String.join(" ", params);
 
         //add command to history
@@ -419,7 +416,7 @@ public class AMInterpreter implements Interpreter {
 
             case "JMP":
                 //check, if bz exists
-                if (this.commandHistory.containsKey(intParams[0])) {
+                if (this.commandHistory.containsKey(intParams[0]) || intParams[0] == 0) {
                     this.jmp(intParams[0]);
 
                     //notify listeners
@@ -564,8 +561,15 @@ public class AMInterpreter implements Interpreter {
         return intArray;
     }
 
-    protected void jmp (int newBZ) {
+    protected void jmp (int newBZ) throws ScriptEndReachedException {
         this.bz = newBZ;
+
+        if (newBZ == 0) {
+            this.notifyListeners();
+
+            //quit application
+            throw new ScriptEndReachedException("Script end was reached.");
+        }
 
         while (this.commandHistory.containsKey(newBZ)) {
             this.bz++;

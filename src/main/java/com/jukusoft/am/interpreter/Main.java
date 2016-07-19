@@ -1,5 +1,6 @@
 package com.jukusoft.am.interpreter;
 
+import com.jukusoft.am.interpreter.exception.ScriptEndReachedException;
 import com.jukusoft.am.interpreter.impl.AMInterpreter;
 import com.jukusoft.am.interpreter.listener.PrintLineListener;
 
@@ -151,6 +152,9 @@ public class Main {
                         System.out.println();
 
                         continue;
+                    } catch (ScriptEndReachedException e) {
+                        System.out.println("executed AM0 commands successful, end of script or return reached.");
+                        break;
                     }
                 } else {
                     System.out.println("Cannot read file " + f.getName() + ", please set correct file permissions!");
@@ -165,6 +169,8 @@ public class Main {
                     amInterpreter.executeLine(line);
                 } catch (NumberFormatException e) {
                     System.out.println("Error! Please insert an number as parameter!");
+                } catch (ScriptEndReachedException e) {
+                    System.out.println("executed AM0 commands successful, end of script or return reached.");
                 } catch (Exception e) {
                     System.out.println("An runtime error oncurred: " + e.getLocalizedMessage());
                 }

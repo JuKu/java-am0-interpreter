@@ -1,5 +1,6 @@
 package com.jukusoft.am.interpreter;
 
+import com.jukusoft.am.interpreter.exception.ScriptEndReachedException;
 import com.jukusoft.am.interpreter.listener.CommandExecutedListener;
 
 /**
@@ -7,9 +8,9 @@ import com.jukusoft.am.interpreter.listener.CommandExecutedListener;
  */
 public interface Interpreter {
 
-    public void executeLine (String line, int lineNumber);
+    public void executeLine (String line, int lineNumber) throws ScriptEndReachedException;
 
-    public void executeLine (String line);
+    public void executeLine (String line) throws ScriptEndReachedException;
 
     public void reset ();
 
