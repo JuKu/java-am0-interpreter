@@ -34,10 +34,10 @@ public class Main {
 
         while (true) {
             //get line number
-            int lineNumber = amInterpreter.getCurrentLineNumber();
+            int bz = amInterpreter.getBZ();
 
             //print prompt
-            System.out.print("\n#" + lineNumber + " > ");
+            System.out.print("\n#" + bz + " > ");
 
             try {
                 //read line

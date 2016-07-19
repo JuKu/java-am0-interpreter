@@ -57,6 +57,14 @@ public class AMInterpreter implements Interpreter {
     public static final int FALSE_INT_VALUE = 0;
     public static final int TRUE_INT_VALUE = 1;
 
+    /**
+    * map with command history
+     *
+     * key - BZ
+     * value - command incl. params
+    */
+    protected Map<Integer,String> commandHistory = new HashMap<>();
+
     public AMInterpreter () {
         //put number of required params per command to map
         this.commandParams.put("LIT", 1);
@@ -141,9 +149,6 @@ public class AMInterpreter implements Interpreter {
 
         //increment line number
         this.currentLineNumber++;
-
-        //incremnt command counter
-        this.bz++;
     }
 
     @Override
@@ -153,6 +158,9 @@ public class AMInterpreter implements Interpreter {
 
     public void executeCommand (String cmd, String... params) throws UnknownCommandException, NumberFormatException, IllegalCommandArgumentException, InterpreterRuntimeException {
         this.lastCommand = cmd + " " + String.join(" ", params);
+
+        //add command to history
+        this.commandHistory.put(this.bz, cmd + " " + String.join(" ", params));
 
         if (this.commandParams.containsKey(cmd)) {
             int requiredParams = this.commandParams.get(cmd);
@@ -413,6 +421,9 @@ public class AMInterpreter implements Interpreter {
 
         //notify listeners
         this.notifyListeners();
+
+        //incremnt command counter
+        this.bz++;
     }
 
     public void reset() {
