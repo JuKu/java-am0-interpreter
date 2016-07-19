@@ -34,7 +34,7 @@ public class Main {
 
         while (true) {
             //get line number
-            int bz = amInterpreter.getBZ();
+            int bz = amInterpreter.getLastBZ();
 
             //print prompt
             System.out.print("\n#" + bz + " > ");

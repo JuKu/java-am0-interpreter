@@ -47,6 +47,7 @@ public class AMInterpreter implements Interpreter {
     protected int currentLineNumber = 1;
 
     protected int bz = 1;
+    protected int lastBZ = 1;
 
     protected int ref = 1;
 
@@ -424,6 +425,10 @@ public class AMInterpreter implements Interpreter {
 
         //incremnt command counter
         this.bz++;
+
+        if (this.bz > this.lastBZ) {
+            this.lastBZ = this.bz;
+        }
     }
 
     public void reset() {
@@ -465,6 +470,11 @@ public class AMInterpreter implements Interpreter {
     @Override
     public int getBZ() {
         return this.bz;
+    }
+
+    @Override
+    public int getLastBZ() {
+        return this.lastBZ;
     }
 
     @Override
@@ -521,6 +531,10 @@ public class AMInterpreter implements Interpreter {
         }
 
         return intArray;
+    }
+
+    protected void jmp (int newBZ) {
+
     }
 
     public static String trimEnd (String value) {

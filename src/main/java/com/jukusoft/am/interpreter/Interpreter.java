@@ -21,6 +21,8 @@ public interface Interpreter {
 
     public int getBZ ();
 
+    public int getLastBZ ();
+
     public void addInputNumber (int value);
 
     public void setRef (int ref);
