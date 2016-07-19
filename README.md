@@ -1,2 +1,4 @@
-# java-am0-interpreter
-An AM0 Interpreter for Java
+# AM0 Interpreter for Java
+
+## Supported AM0 commands:
+ - LIT <Integer> -
