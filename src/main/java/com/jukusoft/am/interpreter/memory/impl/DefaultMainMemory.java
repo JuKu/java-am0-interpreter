@@ -49,7 +49,7 @@ public class DefaultMainMemory implements MainMemory {
     public int get(int index) throws AMMainMemoryException {
         index = index - 1;
 
-        if (this.memory.size() >= index) {
+        if (this.memory.size() > index) {
             //get value on index
             int value = this.memory.get(index);
 
