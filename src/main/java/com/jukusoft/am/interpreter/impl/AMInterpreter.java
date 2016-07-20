@@ -607,7 +607,7 @@ public class AMInterpreter implements Interpreter {
 
         }
 
-        return n - 1;
+        return n;
     }
 
     @Override

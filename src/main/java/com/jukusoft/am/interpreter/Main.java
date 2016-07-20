@@ -143,6 +143,13 @@ public class Main {
                         //print header
                         printLineListener.printHeader();
 
+                        //first, add all code lines to code history
+                        int i = 1;
+
+                        for (String line1 : lines) {
+                            i = amInterpreter.setCommandLine(i, line1);
+                        }
+
                         for (String line1 : lines) {
                             //execute line
                             amInterpreter.executeLine(line1);
