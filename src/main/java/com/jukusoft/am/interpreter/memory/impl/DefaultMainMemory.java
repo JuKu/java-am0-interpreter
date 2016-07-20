@@ -16,25 +16,28 @@ public class DefaultMainMemory implements MainMemory {
 
     @Override
     public void push(int index, int i) throws AMMainMemoryException {
-        if (this.memory.size() >= index - 1 && this.memory.size() != 0 && index != 1) {
+        /*if (this.memory.size() >= index - 1 && this.memory.size() != 0 && index != 1) {
             //specific element first
             try {
                 this.memory.remove(index - 1);
             } catch (IndexOutOfBoundsException e) {
                 //
             }
-        }
+        }*/
 
         if (index - 1 == this.memory.size()) {
             this.memory.add(i);
             return;
         }
 
-        try {
+        /*try {
             this.memory.add(index - 1, i);
         } catch (IndexOutOfBoundsException e) {
             throw new AMMainMemoryException("Cannot add " + i + " to index " + index + ", because memory size is only " + memory.size() + ", this means max. possible index is " + memory.size() + ".");
-        }
+        }*/
+
+        //set value
+        this.memory.set(index - 1, i);
     }
 
     @Override
