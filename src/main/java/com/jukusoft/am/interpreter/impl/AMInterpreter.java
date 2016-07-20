@@ -535,6 +535,20 @@ public class AMInterpreter implements Interpreter {
 
                 break;
 
+            case "INPUT":
+                this.resetInput();
+
+                for (int i1 = 0; i1 < intParams.length; i1++) {
+                    int value = intParams[i1];
+
+                    System.out.println("add input: " + value + ", raw input: " + params[i1]);
+                    this.addInputNumber(value);
+                }
+
+                System.out.println("" + inputQueue.size() + " input numbers set.");
+
+                break;
+
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
         }
@@ -682,7 +696,8 @@ public class AMInterpreter implements Interpreter {
         int[] intArray = new int[array.length];
 
         for (int i = 0; i < array.length; i++) {
-            intArray[0] = Integer.parseInt(array[i]);
+            //System.out.println("raw input: " + array[i] + ", int: " + Integer.parseInt(array[i]));
+            intArray[i] = Integer.parseInt(array[i]);
         }
 
         return intArray;
