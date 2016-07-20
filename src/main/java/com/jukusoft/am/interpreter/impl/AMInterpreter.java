@@ -548,7 +548,8 @@ public class AMInterpreter implements Interpreter {
                     this.addInputNumber(value);
                 }
 
-                System.out.println("" + inputQueue.size() + " input numbers set.");
+                this.notifyListeners();
+                //System.out.println("" + inputQueue.size() + " input numbers set.");
 
                 return;
 
