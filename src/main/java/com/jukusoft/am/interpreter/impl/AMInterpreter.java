@@ -89,6 +89,10 @@ public class AMInterpreter implements Interpreter {
     }
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
+        if (line == null) {
+            throw new ScriptEndReachedException("reached end of script or return statement.");
+        }
+
         //split commands by semicoleon
         String[] commands = line.split(";");
 
@@ -695,6 +699,8 @@ public class AMInterpreter implements Interpreter {
             //quit application
             throw new ScriptEndReachedException("SUCCESS! Script end or return statement was reached.");
         }
+
+        this.notifyListeners();
 
         while (this.commandHistory.containsKey(newBZ)) {
             this.bz++;
