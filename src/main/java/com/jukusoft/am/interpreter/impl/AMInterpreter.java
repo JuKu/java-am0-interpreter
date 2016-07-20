@@ -173,6 +173,10 @@ public class AMInterpreter implements Interpreter {
             }
         }
 
+        if (this.jmpCounter >= MAX_JUMPS) {
+            throw new ScriptEndReachedException("ERROR! Max. number of allowed jumps reached. Maybe you have an endless loop?");
+        }
+
         int[] intParams = this.toIntArray(params);
 
         int i = 0;
