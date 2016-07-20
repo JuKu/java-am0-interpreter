@@ -742,10 +742,10 @@ public class AMInterpreter implements Interpreter {
             //get command
             String cmdStr = this.commandHistory.get(this.bz);
 
+            //this.bz++;
+
             //execute command
             this.executeLine(cmdStr);
-
-            this.bz++;
         }
 
         this.jmpCounter--;
