@@ -531,7 +531,7 @@ public class AMInterpreter implements Interpreter {
                 break;
 
             case "START":
-                this.bz = intParams[0];
+                this.bz = intParams[0] - 1;
 
                 break;
 
