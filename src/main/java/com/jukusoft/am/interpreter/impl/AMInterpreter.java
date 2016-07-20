@@ -85,6 +85,7 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("LE", 0);
         this.commandParams.put("GE", 0);
         this.commandParams.put("JMP", 1);
+        this.commandParams.put("PUSH", 0);
     }
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
@@ -509,6 +510,18 @@ public class AMInterpreter implements Interpreter {
                 } catch (AMMainMemoryException e) {
                     throw new InterpreterRuntimeException(cmd, "Cannot set input value " + k + " to main memory LK, because index doesnt exists.\n" + e.getLocalizedMessage());
                 }
+
+                break;
+
+            case "PUSH":
+                if (stack.size() < 1) {
+                    throw new InterpreterRuntimeException(cmd, "Cannot execute PUSH, because 1 element on stack required.");
+                }
+
+                i = this.stack.poll();
+
+                //add value to LK
+                this.memory.push(i);
 
                 break;
 
