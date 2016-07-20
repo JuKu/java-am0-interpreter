@@ -358,8 +358,8 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot execute LT, because 2 elements on stack required.");
                 }
 
-                a = stack.poll();
                 b = stack.poll();
+                a = stack.poll();
 
                 if (a < b) {
                     //push result to stack
@@ -376,8 +376,8 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot execute GT, because 2 elements on stack required.");
                 }
 
-                a = stack.poll();
                 b = stack.poll();
+                a = stack.poll();
 
                 if (a > b) {
                     //push result to stack
@@ -394,8 +394,8 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot execute LE, because 2 elements on stack required.");
                 }
 
-                a = stack.poll();
                 b = stack.poll();
+                a = stack.poll();
 
                 if (a <= b) {
                     //push result to stack
@@ -412,8 +412,8 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot execute GE, because 2 elements on stack required.");
                 }
 
-                a = stack.poll();
                 b = stack.poll();
+                a = stack.poll();
 
                 if (a >= b) {
                     //push result to stack
