@@ -259,8 +259,8 @@ public class AMInterpreter implements Interpreter {
                 i = stack.poll();
                 k = stack.poll();
 
-                //add
-                res = i - k;
+                //sub
+                res = k - i;
 
                 //push result to stack
                 this.stack.push(res);
@@ -289,11 +289,11 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot execute DIV, because 2 elements on stack required.");
                 }
 
-                i = stack.poll();
-                k = stack.poll();
+                b = stack.poll();
+                a = stack.poll();
 
-                //add
-                res = i / k;
+                //div
+                res = a / b;
 
                 //push result to stack
                 this.stack.push(res);
@@ -305,11 +305,11 @@ public class AMInterpreter implements Interpreter {
                     throw new InterpreterRuntimeException(cmd, "Cannot execute MOD, because 2 elements on stack required.");
                 }
 
-                i = stack.poll();
-                k = stack.poll();
+                b = stack.poll();
+                a = stack.poll();
 
                 //add
-                res = i % k;
+                res = a % b;
 
                 //push result to stack
                 this.stack.push(res);
