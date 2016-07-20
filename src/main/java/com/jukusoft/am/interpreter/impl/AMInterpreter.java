@@ -593,6 +593,24 @@ public class AMInterpreter implements Interpreter {
     }
 
     @Override
+    public int setCommandLine(int i, String cmdStr) {
+        String[] array = cmdStr.split(";");
+        int n = i;
+
+        for (String str : array) {
+            str = trimEnd(trimStart(str));
+
+            if (!str.isEmpty() && !str.equals("") && !str.equals(" ")) {
+                this.commandHistory.put(n, str);
+                n++;
+            }
+
+        }
+
+        return n - 1;
+    }
+
+    @Override
     public void setRef(int ref) {
         this.ref = ref;
     }
@@ -600,6 +618,14 @@ public class AMInterpreter implements Interpreter {
     @Override
     public void print() {
         this.notifyListeners();
+    }
+
+    @Override
+    public void resetHistory() {
+        this.bz = 1;
+        this.currentLineNumber = 1;
+
+        this.commandHistory.clear();
     }
 
     @Override

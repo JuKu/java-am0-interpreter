@@ -26,9 +26,13 @@ public interface Interpreter {
 
     public void addInputNumber (int value);
 
+    public int setCommandLine (int i, String cmdStr);
+
     public void setRef (int ref);
 
     public void print ();
+
+    public void resetHistory ();
 
     public void printHistory ();
 
