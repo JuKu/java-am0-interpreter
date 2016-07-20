@@ -28,5 +28,5 @@ experimental:
  - WRITE <Index in main memory LK>
  - READ <Index in main memory LK>
 
- ## Supported AM1 coommands:
+## Supported AM1 coommands:
  - PUSH (AM1 standard)
