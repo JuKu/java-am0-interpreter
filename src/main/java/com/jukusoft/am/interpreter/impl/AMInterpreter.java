@@ -91,7 +91,7 @@ public class AMInterpreter implements Interpreter {
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
         if (line == null) {
-            throw new ScriptEndReachedException("reached end of script or return statement.");
+            throw new ScriptEndReachedException("reached end of script or return statement, line is null.");
         }
 
         //split commands by semicoleon
@@ -433,17 +433,17 @@ public class AMInterpreter implements Interpreter {
             case "JMP":
                 //check, if bz exists
                 if (this.commandHistory.containsKey(intParams[0]) || intParams[0] == 0) {
-                    this.jmp(intParams[0]);
-
-                    //notify listeners
-                    this.notifyListeners();
-
                     //incremnt command counter
                     this.bz++;
 
                     if (this.bz > this.lastBZ) {
                         this.lastBZ = this.bz;
                     }
+
+                    //notify listeners
+                    this.notifyListeners();
+
+                    this.jmp(intParams[0]);
 
                     return;
                 } else {
@@ -723,14 +723,16 @@ public class AMInterpreter implements Interpreter {
 
         this.notifyListeners();
 
-        while (this.commandHistory.containsKey(newBZ)) {
-            this.bz++;
+        while (this.commandHistory.containsKey(this.bz)) {
+            System.out.println("jmp to " + newBZ);
 
             //get command
             String cmdStr = this.commandHistory.get(this.bz - 1);
 
             //execute command
             this.executeLine(cmdStr);
+
+            this.bz++;
         }
 
         this.jmpCounter--;
