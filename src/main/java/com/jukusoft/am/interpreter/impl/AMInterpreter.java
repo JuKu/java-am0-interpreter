@@ -544,7 +544,7 @@ public class AMInterpreter implements Interpreter {
                 for (int i1 = 0; i1 < intParams.length; i1++) {
                     int value = intParams[i1];
 
-                    System.out.println("add input: " + value + ", raw input: " + params[i1]);
+                    //System.out.println("add input: " + value + ", raw input: " + params[i1]);
                     this.addInputNumber(value);
                 }
 
@@ -638,7 +638,7 @@ public class AMInterpreter implements Interpreter {
 
             if (!str.isEmpty() && !str.equals("") && !str.equals(" ")) {
                 str += ";";
-                System.out.println("put command to BZ " + n + ": " + str);
+                //System.out.println("put command to BZ " + n + ": " + str);
                 this.commandHistory.put(n, str);
                 n++;
             }
