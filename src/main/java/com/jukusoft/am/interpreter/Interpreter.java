@@ -1,5 +1,6 @@
 package com.jukusoft.am.interpreter;
 
+import com.jukusoft.am.interpreter.exception.InterpreterRuntimeException;
 import com.jukusoft.am.interpreter.exception.ScriptEndReachedException;
 import com.jukusoft.am.interpreter.listener.CommandExecutedListener;
 
@@ -21,6 +22,8 @@ public interface Interpreter {
     public int getCurrentLineNumber ();
 
     public int getBZ ();
+
+    public void setBZ (int bz) throws InterpreterRuntimeException;
 
     public int getLastBZ ();
 

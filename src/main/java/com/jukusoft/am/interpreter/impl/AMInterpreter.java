@@ -433,6 +433,11 @@ public class AMInterpreter implements Interpreter {
             case "JMP":
                 //check, if bz exists
                 if (this.commandHistory.containsKey(intParams[0]) || intParams[0] == 0) {
+                    //notify listeners
+                    this.notifyListeners();
+
+                    this.jmp(intParams[0]);
+
                     //incremnt command counter
                     this.bz++;
 
@@ -440,13 +445,11 @@ public class AMInterpreter implements Interpreter {
                         this.lastBZ = this.bz;
                     }
 
-                    //notify listeners
-                    this.notifyListeners();
-
-                    this.jmp(intParams[0]);
-
-                    return;
+                    throw new ScriptEndReachedException("script end or return statement reached.");
                 } else {
+                    System.out.println("======== History DEBUG =========");
+                    printHistory();
+
                     throw new InterpreterRuntimeException(cmd, "Cannot jump to " + intParams[0] + ", this command line wasnt inserted yet.");
                 }
 
@@ -531,9 +534,9 @@ public class AMInterpreter implements Interpreter {
                 break;
 
             case "START":
-                this.bz = intParams[0] - 1;
+                this.bz = intParams[0];
 
-                break;
+                return;
 
             case "INPUT":
                 this.resetInput();
@@ -547,7 +550,7 @@ public class AMInterpreter implements Interpreter {
 
                 System.out.println("" + inputQueue.size() + " input numbers set.");
 
-                break;
+                return;
 
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
@@ -606,6 +609,15 @@ public class AMInterpreter implements Interpreter {
     }
 
     @Override
+    public void setBZ(int bz) throws InterpreterRuntimeException {
+        if (bz < 0) {
+            throw new InterpreterRuntimeException("START", "Cannot set BZ < 0.");
+        }
+
+        this.bz = bz;
+    }
+
+    @Override
     public int getLastBZ() {
         return this.lastBZ;
     }
@@ -625,10 +637,11 @@ public class AMInterpreter implements Interpreter {
             str = trimEnd(trimStart(str));
 
             if (!str.isEmpty() && !str.equals("") && !str.equals(" ")) {
+                str += ";";
+                System.out.println("put command to BZ " + n + ": " + str);
                 this.commandHistory.put(n, str);
                 n++;
             }
-
         }
 
         return n;
@@ -721,13 +734,13 @@ public class AMInterpreter implements Interpreter {
             throw new ScriptEndReachedException("SUCCESS! Script end or return statement was reached.");
         }
 
-        this.notifyListeners();
+        //this.notifyListeners();
+
+        //System.out.println("jmp to " + newBZ);
 
         while (this.commandHistory.containsKey(this.bz)) {
-            System.out.println("jmp to " + newBZ);
-
             //get command
-            String cmdStr = this.commandHistory.get(this.bz - 1);
+            String cmdStr = this.commandHistory.get(this.bz);
 
             //execute command
             this.executeLine(cmdStr);

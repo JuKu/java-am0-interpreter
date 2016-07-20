@@ -1,5 +1,6 @@
 package com.jukusoft.am.interpreter;
 
+import com.jukusoft.am.interpreter.exception.InterpreterRuntimeException;
 import com.jukusoft.am.interpreter.exception.ScriptEndReachedException;
 import com.jukusoft.am.interpreter.impl.AMInterpreter;
 import com.jukusoft.am.interpreter.listener.PrintLineListener;
@@ -147,7 +148,25 @@ public class Main {
                         int i = 1;
 
                         for (String line1 : lines) {
-                            i = amInterpreter.setCommandLine(i, line1);
+                            if (line1.contains("START")) {
+                                //remove whitespaces at start and end of command
+                                line1 = AMInterpreter.trimEnd(AMInterpreter.trimStart(line1));
+
+                                line1 = line1.replace("START: ", "");
+                                line1 = line1.replace("START ", "");
+                                line1 = line1.replace("START", "");
+                                line1 = line1.replace(";", "");
+
+                                int i1 = Integer.parseInt(line1);
+
+                                //set new start BZ
+                                i = i1;
+                                amInterpreter.setBZ(i);
+
+                                continue;
+                            } else {
+                                i = amInterpreter.setCommandLine(i, line1);
+                            }
                         }
 
                         for (String line1 : lines) {
@@ -161,7 +180,10 @@ public class Main {
                         continue;
                     } catch (ScriptEndReachedException e) {
                         System.out.println(e.getMessage());
-                        break;
+                        continue;
+                    } catch (InterpreterRuntimeException e) {
+                        e.printStackTrace();
+                        continue;
                     }
                 } else {
                     System.out.println("Cannot read file " + f.getName() + ", please set correct file permissions!");
