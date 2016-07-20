@@ -6,6 +6,12 @@ Its also possible to use only the core functionality to integrate this interpret
 
 Version: 0.0.2 (Pre-Alpha)
 
+Download:
+https://github.com/JuKu/java-am0-interpreter/releases
+
+## Execution
+Java 8 is required. You can download only the .jar file and execute them in console with "java -jar <filename>.jar".
+
 ## Supported AM0 commands:
  - LIT <Integer>
  - ADD
@@ -29,4 +35,4 @@ experimental:
  - READ <Index in main memory LK>
 
 ## Supported AM1 coommands:
- - PUSH (AM1 standard)
+ - PUSH
