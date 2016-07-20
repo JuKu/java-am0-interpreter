@@ -86,6 +86,7 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("GE", 0);
         this.commandParams.put("JMP", 1);
         this.commandParams.put("PUSH", 0);
+        this.commandParams.put("START", 1);
     }
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
@@ -526,6 +527,11 @@ public class AMInterpreter implements Interpreter {
 
                 //add value to LK
                 this.memory.push(i);
+
+                break;
+
+            case "START":
+                this.bz = intParams[0];
 
                 break;
 
