@@ -174,6 +174,9 @@ public class AMInterpreter implements Interpreter {
         }
 
         if (this.jmpCounter >= MAX_JUMPS) {
+            System.out.println("command history: ");
+            this.printHistory();
+
             throw new ScriptEndReachedException("ERROR! Max. number of allowed jumps reached. Maybe you have an endless loop?");
         }
 
