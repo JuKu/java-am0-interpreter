@@ -460,7 +460,7 @@ public class AMInterpreter implements Interpreter {
                         throw new InterpreterRuntimeException(cmd, "Cannot execute JMP, because 1 element on stack required.");
                     }
 
-                    if (stack.poll() == TRUE_INT_VALUE) {
+                    if (stack.poll() == FALSE_INT_VALUE) {
                         this.jmp(intParams[0]);
 
                         //notify listeners
@@ -474,12 +474,12 @@ public class AMInterpreter implements Interpreter {
                         }
 
                         return;
+                    } else {
+                        break;
                     }
                 } else {
                     throw new InterpreterRuntimeException(cmd, "Cannot jump to " + intParams[0] + ", this command line wasnt inserted yet.");
                 }
-
-                break;
 
             case "WRITE":
                 //get index of main memory
