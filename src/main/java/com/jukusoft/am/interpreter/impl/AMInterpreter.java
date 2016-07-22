@@ -87,6 +87,7 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("JMP", 1);
         this.commandParams.put("PUSH", 0);
         this.commandParams.put("START", 1);
+        this.commandParams.put("INIT", 1);
     }
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
@@ -552,6 +553,16 @@ public class AMInterpreter implements Interpreter {
                 //System.out.println("" + inputQueue.size() + " input numbers set.");
 
                 return;
+
+            case "INIT":
+                i = intParams[0];
+
+                for (int c = 0; c < i; c++) {
+                    //push new value 0 to main memory
+                    this.memory.push(0);
+                }
+
+                break;
 
             default:
                 throw new UnknownCommandException("Command " + cmd + " isnt supported yet.");
