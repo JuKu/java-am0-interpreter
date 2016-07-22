@@ -37,3 +37,4 @@ experimental:
 
 ## Supported AM1 coommands:
  - PUSH
+ - INIT
