@@ -38,3 +38,7 @@ experimental:
 ## Supported AM1 coommands:
  - PUSH
  - INIT
+
+experimental:
+ - LOADI
+ - STOREI

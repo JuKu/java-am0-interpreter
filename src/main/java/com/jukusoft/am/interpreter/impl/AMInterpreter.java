@@ -88,6 +88,8 @@ public class AMInterpreter implements Interpreter {
         this.commandParams.put("PUSH", 0);
         this.commandParams.put("START", 1);
         this.commandParams.put("INIT", 1);
+        this.commandParams.put("LOADI", 1);
+        this.commandParams.put("STOREI", 1);
     }
 
     public void executeLine (String line, int lineNumber) throws NumberFormatException, ScriptEndReachedException {
@@ -524,7 +526,7 @@ public class AMInterpreter implements Interpreter {
 
             case "PUSH":
                 if (stack.size() < 1) {
-                    throw new InterpreterRuntimeException(cmd, "Cannot execute PUSH, because 1 element on stack required.");
+                    throw new InterpreterRuntimeException(cmd, "Cannot execute PUSH, because 1 element on is stack required.");
                 }
 
                 i = this.stack.poll();
@@ -560,6 +562,43 @@ public class AMInterpreter implements Interpreter {
                 for (int c = 0; c < i; c++) {
                     //push new value 0 to main memory
                     this.memory.push(0);
+                }
+
+                break;
+
+            case "LOADI":
+                //calculate address from ref pointer and integer param
+                int address = this.ref + intParams[0];
+                int value = 0;
+
+                try {
+                    //get value from main memory / LK
+                    value = this.memory.get(address);
+                } catch (AMMainMemoryException e) {
+                    throw new InterpreterRuntimeException("LOADI", "Cannot get value of address " + address + " in main memory / LK (ref: " + this.ref + ", LOADI param: " + intParams[0] + "), because memory size is currently only " + this.memory.size() + ".");
+                }
+
+                //push value to stack
+                this.stack.push(value);
+
+                break;
+
+            case "STOREI":
+                //get address of
+                i = this.ref + intParams[0];
+
+                if (stack.size() < 1) {
+                    throw new InterpreterRuntimeException(cmd, "Cannot execute STOREI, because 1 element on stack is required.");
+                }
+
+                //get value from stack / DK
+                a = stack.poll();
+
+                //add value a on index i to main memory / DK
+                try {
+                    this.memory.push(i, a);
+                } catch (AMMainMemoryException e) {
+                    throw new InterpreterRuntimeException(cmd, "Cannot set input value " + a + " to main memory LK, because index " + i + " (ref: " + this.ref + ", STOREI param: " + intParams[0] + ") doesnt exists.\n" + e.getLocalizedMessage());
                 }
 
                 break;
