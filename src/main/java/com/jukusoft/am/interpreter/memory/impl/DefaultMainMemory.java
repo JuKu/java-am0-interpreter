@@ -42,7 +42,7 @@ public class DefaultMainMemory implements MainMemory {
 
     @Override
     public void push(int i) {
-        this.memory.add(i);
+        this.memory.add(this.memory.size(), i);
     }
 
     @Override
