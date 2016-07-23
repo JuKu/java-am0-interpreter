@@ -11,7 +11,7 @@ https://github.com/JuKu/java-am0-interpreter/releases
 
 ## Execution
 Java 8 is required. You can download only the .jar file or unzip the zip archive.
-Execute them in console with "java -jar <filename>.jar".
+Execute them in console with "java -jar FILENAME.jar".
 
 ## Supported AM0 commands:
  - LIT <Integer>
