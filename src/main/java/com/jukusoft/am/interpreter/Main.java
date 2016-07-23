@@ -202,6 +202,7 @@ public class Main {
                     System.out.println(e.getMessage());
                 } catch (Exception e) {
                     System.out.println("An runtime error oncurred: " + e.getLocalizedMessage());
+                    e.printStackTrace();
                 }
             }
         }
